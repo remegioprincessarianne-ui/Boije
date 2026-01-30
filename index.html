@@ -1,0 +1,154 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>Web Layout</title>  
+    <style>  
+    body {  
+        background-color: #fff9e6; /* Light yellow background */  
+    }  
+
+    .container {  
+        flex: 1;  
+        display: flex;  
+        height: 100%;  
+    }  
+
+    nav.sidebar {  
+        width: 220px;  
+        background: #fff3cc; /* Light yellow background */  
+        padding: 20px;  
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);  
+    }  
+
+    nav.sidebar ul {  
+        list-style: none;  
+        padding: 0;  
+    }  
+
+    nav.sidebar li {  
+        margin-bottom: 17px;  
+    }  
+
+    nav.sidebar a {  
+        text-decoration: none;  
+        color: #8a6d3b; /* Dark golden text */  
+        font-weight: bold;  
+        cursor: pointer;  
+    }  
+
+    main#content {  
+        flex: 1;  
+        padding: 20px;  
+        background: #ffffcc; /* Soft yellow background */  
+        overflow-y: auto;  
+        color: #7d6608; /* Dark yellow text */  
+    }  
+
+    /* Section Headers */  
+    main#content h2 {  
+        color: #8a6d3b;  
+        border-bottom: 2px solid #8a6d3b;  
+        padding-bottom: 5px;  
+        margin-top: 0;  
+    }  
+
+    main#content h3 {  
+        color: #b8860b;  
+        margin-top: 20px;  
+    }  
+
+    /* Lists */  
+    .content-list {  
+        list-style-type: disc;  
+        margin-left: 25px;  
+        line-height: 1.8;  
+    }  
+
+    .sub-list {  
+        list-style-type: circle;  
+        margin-left: 40px;  
+        line-height: 1.6;  
+    }  
+
+    header {  
+        background-color: #d4af37; /* Golden yellow background */  
+        color: white;  
+        padding: 10px;  
+        text-align: center;  
+        margin: 0;  
+    }  
+
+    header h1 {  
+        margin: 0;  
+    }  
+
+    footer {  
+        background-color: #d4af37; /* Golden yellow background */  
+        color: white;  
+        padding: 8px;  
+        text-align: center;  
+        margin: 0;  
+    }  
+
+    footer p {  
+        margin: 0;  
+    }  
+    </style>
+</head>  
+<body>  
+    <header>  
+        <h1>SDIHS</h1>  
+    </header>  
+    <div class="container">  
+        <nav class="sidebar">  
+            <ul>  
+                <li><a onclick="loadContent('home')">School Profile</a></li>  
+                <li><a onclick="loadContent('shs')">SHS</a></li>  
+                <li><a onclick="loadContent('jhs')">JHS</a></li>  
+            </ul>  
+        </nav>  
+
+        <main id="content">  
+            <h2>Welcome, SDIHS!</h2>  
+            <p>Pulang Santo likas na mabait, matalino, at akribol<br>  
+            School for talented students.</p>  
+        </main>
+    </div>  
+    <footer>  
+        <p>&copy; Fourth Year Students Batch 2025 - 2026.</p>  
+    </footer>  
+
+    <script>  
+        function loadContent(section) {  
+            const content = document.getElementById('content');  
+
+            if (section === 'home') {  
+                content.innerHTML =   
+                    `<h2>School Profile</h2>  
+                    <h3>Mission</h3>  
+                    <p>We dream of Filipinos who passionately love their country and whose values and  
+                    competencies enable them to realize their full potential and contribute meaningfully  
+                    to building the nation. As a learner-centered public institution, the Department of  
+                    Education continuously improves itself to better serve its stakeholders.</p>  
+
+                    <h3>Vision</h3>  
+                    <p>To develop globally competitive, values-driven, and compassionate learners who are proud of their Filipino identity and committed to building a just, peaceful, and progressive nation.</p>  
+
+                    <h3>Core Values</h3>  
+                    <ul class="content-list">  
+                        <li><strong>Integrity</strong>: Acting with honesty, transparency, and strong moral principles.</li>  
+                        <li><strong>Excellence</strong>: Striving for the highest quality in all endeavors.</li>  
+                        <li><strong>Unity</strong>: Working together with respect and cooperation.</li>  
+                        <li><strong>Service</strong>: Committing to help others and contribute to the community.</li>  
+                        <li><strong>Patriotism</strong>: Valuing Filipino culture, history, and the welfare of the nation.</li>  
+                    </ul>`;  
+            }  
+
+            else if (section === 'shs') {  
+                content.innerHTML =   
+                    `<h2>Senior High School (SHS) – Grades 11 & 12</h2>  
+                    <p>SDIHS Senior High School is designed to equip students with specialized knowledge and practical skills to prepare them for higher education, employment, or entrepreneurship. All programs are aligned with the school’s mission, vision, and core values.</p>  
+                      
+                    <h3>Available Strands & Specializations</h3>  
+                    <ul class="content-list">  
+        
