@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICT Quiz Game</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #quiz-container {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    width: 450px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-align: center;
+    display: none; /* hidden until Start clicked */
+  }
+  #start-screen {
+    text-align: center;
+  }
+  h1 { color: #333; }
+  #score {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  #question-number { font-size: 16px; color: #666; margin-bottom: 15px; }
+  #question-text { font-size: 20px; margin-bottom: 20px; color: #111; }
+  .choice-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: ligth pink;
+  }
+  .choice-btn:hover { transform: scale(1.03); background: #d9edf7; }
+  .correct { background-color: #4CAF50 !important; color: white; }
+  .wrong { background-color: #f44336 !important; color: white; }
+  #result { font-size: 18px; margin: 15px 0; height: 25px; font-weight: bold; }
+  #next-btn, #start-btn, #restart-btn {
+    margin-top: 10px;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #ff9800;
+    color: white;
+    transition: all 0.3s;
+  }
+  #next-btn:hover, #start-btn:hover, #restart-btn:hover { background-color: #e68900; }
+</style>
+</head>
+<body>
+
+<div id="start-screen">
+  <h1>ICT Quiz Game</h1>
+  <button id="start-btn">Start Quiz</button>
+</div>
+
+<div id="quiz-container">
+  <h1>ICT Quiz</h1>
+  <p id="score">Score: 0</p>
+  <p id="question-number">Question 1 of 10</p>
+  <h3 id="question-text"></h3>
+
+  <button class="choice-btn" id="btnA"></button>
+  <button class="choice-btn" id="btnB"></button>
+  <button class="choice-btn" id="btnC"></button>
+  <button class="choice-btn" id="btnD"></button>
+
+  <p id="result"></p>
+  <button id="next-btn">Next</button>
+  <button id="restart-btn" style="display:none;">Restart Quiz</button>
+</div>
+
+<script>
+const quiz = [
+  {q:"What does ICT stand for?", a:["Information Communication Technology","Internal Computer Tech","Internet Control Tool","Input Control Tech"], correct:0},
+  {q:"What is the main function of a CPU?", a:["Process data and instructions","Store data permanently","Display output","Provide internet access"], correct:0},
+  {q:"Which device is an input device?", a:["Keyboard","Monitor","Printer","Speaker"], correct:0},
+  {q:"Which memory is volatile?", a:["RAM","ROM","Hard Disk","SSD"], correct:0},
+  {q:"Which is software?", a:["Operating System","Motherboard","Keyboard","Monitor"], correct:0},
+  {q:"Which component is responsible for graphics?", a:["GPU","CPU","RAM","ROM"], correct:0},
+  {q:"Which device is used to store data permanently?", a:["Hard Disk","Keyboard","Monitor","CPU"], correct:0},
+  {q:"Which is NOT an output device?", a:["Mouse","Printer","Monitor","Speaker"], correct:0},
+  {q:"What is ROM?", a:["Read Only Memory","Random Output Memory","Rapid Operation Module","Real Output Memory"], correct:0},
+  {q:"Which device is for user input?", a:["Mouse","Printer","Speaker","Monitor"], correct:0}
+];
+
+let current = 0;
+let score = 0;
+
+const startScreen = document.getElementById("start-screen");
+const quizContainer = document.getElementById("quiz-container");
+const questionText = document.getElementById("question-text");
+const questionNumber = document.getElementById("question-number");
+const scoreText = document.getElementById("score");
+const resultText = document.getElementById("result");
+const buttons = [
+  document.getElementById("btnA"),
+  document.getElementById("btnB"),
+  document.getElementById("btnC"),
+  document.getElementById("btnD")
+];
+const nextBtn = document.getElementById("next-btn");
+const startBtn = document.getElementById("start-btn");
+const restartBtn = document.getElementById("restart-btn");
+
+function loadQuestion(){
+  const q = quiz[current];
+  questionText.innerText = q.q;
+  questionNumber.innerText = `Question ${current+1} of ${quiz.length}`;
+  resultText.innerText = "";
+  buttons.forEach((btn,i)=>{
+    btn.innerText = q.a[i];
+    btn.disabled = false;
+    btn.className = "choice-btn";
+  });
+}
+
+buttons.forEach((btn,i)=>{
+  btn.addEventListener("click", ()=>{
+    const correctIndex = quiz[current].correct;
+    if(i === correctIndex){
+      btn.classList.add("correct");
+      resultText.innerText = "Correct!";
+      score++;
+      scoreText.innerText = `Score: ${score}`;
+    } else{
+      btn.classList.add("wrong");
+      resultText.innerText = "Wrong!";
+      buttons[correctIndex].classList.add("correct");
+    }
+    buttons.forEach(b=>b.disabled=true);
+  });
+});
+
+nextBtn.addEventListener("click", ()=>{
+  current++;
+  if(current >= quiz.length){
+    resultText.innerText = `Quiz Finished! Final Score: ${score} / ${quiz.length}`;
+    nextBtn.style.display = "none";
+    restartBtn.style.display = "inline-block";
+  } else {
+    loadQuestion();
+  }
+});
+
+startBtn.addEventListener("click", ()=>{
+  startScreen.style.display = "none";
+  quizContainer.style.display = "block";
+  loadQuestion();
+});
+
+restartBtn.addEventListener("click", ()=>{
+  current = 0;
+  score = 0;
+  scoreText.innerText = `Score: ${score}`;
+  restartBtn.style.display = "none";
+  nextBtn.style.display = "inline-block";
+  loadQuestion();
+});
+
+</script>
+
+</body>
+</html>
